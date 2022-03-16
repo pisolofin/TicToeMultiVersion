@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import TicToeBoard from './components/TicToeBoard/TicToeBoard';
 import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
 import { PlayerToPlay } from './models/ticToe.model';
@@ -27,6 +27,11 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 		setPlayerToPlay(player);
 	};
 
+	/** Handle restart request */
+	const onRestartHandler = (): void => {
+		console.log("Reset");
+	}
+
 	return (<>
 		<div className="tic-toe-container">
 			<div className="tic-toe-board-container">
@@ -36,7 +41,11 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 				/>
 			</div>
 			<div className="tic-toe-display-container">
-				<TicToeDisplay playerToPlay={playerToPlay} playerWon={playerWon} />
+				<TicToeDisplay
+					playerToPlay={playerToPlay}
+					playerWon={playerWon}
+					onRestart={onRestartHandler}
+				/>
 			</div>
 		</div>
 	</>);

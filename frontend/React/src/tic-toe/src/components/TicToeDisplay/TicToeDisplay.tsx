@@ -4,6 +4,7 @@ import { PlayerToPlay } from '../../models/ticToe.model';
 interface TicToeDisplayProps {
 	playerToPlay	: PlayerToPlay;
 	playerWon		: PlayerToPlay | null;
+	onRestart?		: () => void;
 }
 
 const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) => {
@@ -19,11 +20,17 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		}
 	};
 
+	/** Handle restart request */
+	const onRestartHandler = (): void => {
+		props.onRestart?.();
+	};
+
 	return (<>
 		<h4>Turn of player {playerToName(props.playerToPlay)}</h4>
 		{props.playerWon != null &&
 			<h4>Player {playerToName(props.playerWon)} won</h4>
-		}	
+		}
+		<button onClick={onRestartHandler}>Restart</button>
 	</>);
 }
 
