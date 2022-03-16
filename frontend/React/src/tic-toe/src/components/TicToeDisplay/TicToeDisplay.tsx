@@ -30,7 +30,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		{props.playerWon != null &&
 			<h4>Player {playerToName(props.playerWon)} won</h4>
 		}
-		<button onClick={onRestartHandler}>Restart</button>
+		{/* <button onClick={onRestartHandler}>Restart</button> */}
 	</>);
 }
 
