@@ -39,6 +39,7 @@ _I'll compile this section when a new language will be used._
 ## Roadmap
 
 * [ ] Local two players version
+  * [x] React
 * [ ] Configuration page for the name of player
 * [ ] Add basic versione of AI ( client version )
 * [ ] Add basic versione of AI ( server version )
