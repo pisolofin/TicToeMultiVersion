@@ -1,16 +1,10 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-## Tic Tac Toe game implemented in some languages</h3>
+# Tic Tac Toe game implemented in some languages
 
 I'd like implement this simple game in all langages I know. Or better all languages that I want to learn.
 This is my work in my free time to improve my skills.
 
-### Built With
+<!-- BUILD WITH -->
+## Built With
 
 For the frontend I'll use
 
