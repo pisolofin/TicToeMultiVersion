@@ -21,7 +21,7 @@ export class TicToeBoardComponent implements OnInit {
 				[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
 				[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
 				[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty]
-			]			
+			]
 		);
 	}
 
@@ -41,10 +41,9 @@ export class TicToeBoardComponent implements OnInit {
 			return ;
 		}
 
-		this.ticToeGameService.setCellState(
+		this.ticToeGameService.playerPlayed(
 			params.rowIndex,
-			params.columnIndex,
-			TicToeCellSate.O
+			params.columnIndex
 		);
 	}
 }
