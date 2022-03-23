@@ -24,8 +24,6 @@ export class TicToeGameService {
 	public isGameActive$: Observable<boolean> = this._isGameActiveSubject.asObservable();
 
 	constructor(board: TicToeBoardCells) {
-		console.log("TicToeGameService constructor");
-
 		// When board check events
 		this.board$
 			.pipe(filter((board: TicToeBoardCells) => board && (board.length > 0)))
@@ -33,7 +31,6 @@ export class TicToeGameService {
 				const whoWon: PlayerToPlay | null = this._gameUtility.whoWon(board);
 				// If someone won, emit event
 				if (whoWon != null) {
-					console.log(`${whoWon} won`);
 					this._playerWonSubject.next(whoWon);
 					// Stop the game
 					this._isGameActiveSubject.next(false);

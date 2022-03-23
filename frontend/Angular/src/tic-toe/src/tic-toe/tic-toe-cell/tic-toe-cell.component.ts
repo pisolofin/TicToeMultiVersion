@@ -12,7 +12,7 @@ export interface TicToeCellOnClick {
 	templateUrl: './tic-toe-cell.component.html',
 	styleUrls: ['./tic-toe-cell.component.scss']
 })
-export class TicToeCellComponent implements OnInit {
+export class TicToeCellComponent {
 	/** Size of cell, default value is 20px */
 	@Input() public cellWidth: number = 20;
 
@@ -25,16 +25,6 @@ export class TicToeCellComponent implements OnInit {
 
 	/** On user click on button event */
 	@Output() public cellClick: EventEmitter<TicToeCellOnClick> = new EventEmitter<TicToeCellOnClick>();
-
-	constructor() { }
-
-	ngOnInit(): void {
-
-	}
-
-	ngAfterViewInit(): void {
-		console.log(`ngAfterViewInit ${this.rowIndex} - ${this.columnIndex}`);
-	}
 
 	/** Handle click on the button */
 	public onClickHandler(): void {
