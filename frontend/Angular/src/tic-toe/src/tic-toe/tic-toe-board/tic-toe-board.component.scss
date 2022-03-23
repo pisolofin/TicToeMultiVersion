@@ -1,0 +1,11 @@
+$cell-margin: 5px;
+	
+.cells-row {
+	& + .cells-row {
+		margin-top: $cell-margin;
+	}
+
+	& > * + *{
+		margin-left: $cell-margin;
+	}
+}

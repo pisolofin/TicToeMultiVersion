@@ -30,11 +30,6 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 	/** Service for the game */
 	const _ticToeGameService: TicToeGameService = new TicToeGameService(boardState);
 
-	/** Oncli empty cell can changed */
-	const canCellChange = (rowIndex: number, columnIndex: number): boolean => {
-		return boardState[rowIndex][columnIndex] === TicToeCellSate.Empty;
-	}
-
 	/** Cell click handler */
 	const cellClickHandler: TicToeCellClickHandler = (rowIndex: number, columnIndex: number): void => {
 		if (!isGameActive) {
@@ -42,7 +37,7 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 			return ;
 		}
 
-		if (!canCellChange(rowIndex, columnIndex)) {
+		if (!_ticToeGameService.canCellChange(rowIndex, columnIndex)) {
 			console.warn("Not empty cell");
 			return ;
 		}
