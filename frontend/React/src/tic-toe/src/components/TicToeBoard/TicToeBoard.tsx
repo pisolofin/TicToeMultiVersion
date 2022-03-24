@@ -11,6 +11,8 @@ interface TicToeBoardProps {
 	onWon?: (player: PlayerToPlay) => void;
 	/** On player changed */
 	onPlayerChanged?: (player: PlayerToPlay) => void;
+	/** On active game state changed */
+	onIsGameActiveChanged?: (isGameActive: boolean) => void;
 }
 
 const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
@@ -77,7 +79,12 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 		props.onPlayerChanged?.(playerToPlay);
 	}, [playerToPlay]);
 
-	return (<>
+	// When active game state changed
+	useEffect(() => {
+		props.onIsGameActiveChanged?.(isGameActive);
+	}, [isGameActive]);
+
+return (<>
 		<div className="cells-row">
 			<TicToeCell rowIndex={0} columnIndex={0} width={cellWidth} state={_ticToeGameService.getCellState(0, 0)} onClick={cellClickHandler} />
 			<TicToeCell rowIndex={0} columnIndex={1} width={cellWidth} state={_ticToeGameService.getCellState(0, 1)} onClick={cellClickHandler} />

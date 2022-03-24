@@ -2,6 +2,7 @@ import React from 'react';
 import { PlayerToPlay } from '../../models/ticToe.model';
 
 interface TicToeDisplayProps {
+	isGameActive	: boolean;
 	playerToPlay	: PlayerToPlay;
 	playerWon		: PlayerToPlay | null;
 	onRestart?		: () => void;
@@ -26,7 +27,9 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	};
 
 	return (<>
-		<h4>Turn of player {playerToName(props.playerToPlay)}</h4>
+		{props.isGameActive &&
+			<h4>Turn of player {playerToName(props.playerToPlay)}</h4>
+		}
 		{props.playerWon != null &&
 			<h4>Player {playerToName(props.playerWon)} won</h4>
 		}

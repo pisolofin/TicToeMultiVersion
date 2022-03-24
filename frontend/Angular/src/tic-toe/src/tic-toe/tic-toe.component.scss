@@ -1,20 +1,17 @@
-.tic-toe-container {
-	display: flex;
+:host {
+	.tic-toe-container {
+		display: flex;
 
-	.tic-toe-board-container {
-		padding: 5px;
-	}
-
-	.tic-toe-display-container {
-		padding: 5px;
-
-		& h4 {
-			margin-top: 0;
-			margin-bottom: 0;
+		.tic-toe-board-container {
+			padding: 5px;
 		}
-	}
 
-//	.tic-toe-board-container, .tic-toe-display-container {
-//		display: inline-block;
-//	}
+		.tic-toe-display-container {
+			padding: 5px;
+		}
+
+	//	.tic-toe-board-container, .tic-toe-display-container {
+	//		display: inline-block;
+	//	}
+	}
 }

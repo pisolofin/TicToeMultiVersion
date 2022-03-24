@@ -14,6 +14,8 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 	const [playerToPlay, setPlayerToPlay] = useState<PlayerToPlay>(PlayerToPlay.PlayerX);
 	/** Board state */
 	const [playerWon, setPlayerWon] = useState<PlayerToPlay | null>(null);
+	/** Active state of the game */
+	const [isGameActive, setIsGameActive] = useState<boolean>(true);
 
 	/** Callback when somebody won */
 	const onWonHandler = (player: PlayerToPlay): void => {
@@ -27,6 +29,12 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 		setPlayerToPlay(player);
 	};
 
+	/** On active game state changed */
+	const onIsGameActiveChanged = (isGameActive: boolean): void => {
+		console.log("onIsGameActiveChanged" + isGameActive);
+		setIsGameActive(isGameActive);
+	};
+
 	/** Handle restart request */
 	const onRestartHandler = (): void => {
 		console.log("Reset");
@@ -38,12 +46,14 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 				<TicToeBoard
 					onWon={onWonHandler}
 					onPlayerChanged={onPlayerChanged}
+					onIsGameActiveChanged={onIsGameActiveChanged}
 				/>
 			</div>
 			<div className="tic-toe-display-container">
 				<TicToeDisplay
 					playerToPlay={playerToPlay}
 					playerWon={playerWon}
+					isGameActive={isGameActive}
 					onRestart={onRestartHandler}
 				/>
 			</div>
