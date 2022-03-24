@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import TicToeBoard from './components/TicToeBoard/TicToeBoard';
 import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
-import { PlayerToPlay } from './models/ticToe.model';
+import { PlayerToPlay } from './shared/models/ticToe.model';
 
 import './TicToe.scss';
 

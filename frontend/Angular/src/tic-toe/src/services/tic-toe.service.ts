@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, last } from 'rxjs/operators';
-import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../models/ticToe.model';
-import { TicToeGameUtility } from './tic-toe-game.utility';
+import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../../../../../shared/models/ticToe.model';
+import { TicToeGameUtility } from '../../../../../shared/services/tic-toe-game.utility';
 
 export class TicToeGameService {
 	/** Utility to manage game */

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerToPlay } from '../../models/ticToe.model';
+import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
 interface TicToeDisplayProps {
 	isGameActive	: boolean;

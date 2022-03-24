@@ -1,4 +1,4 @@
-import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../models/ticToe.model';
+import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
 
 export class TicToeGameService {
 	private _board: TicToeBoardCells;
