@@ -4,10 +4,8 @@ export class TicToeGameService {
 	private _board: TicToeBoardCells;
 
 	constructor(board: TicToeBoardCells) {
-		console.log("TicToeGameService constructor");
 		this._board = board;
 	}
-
 
 	/** Return a new reset board */
 	public resetBoard(): TicToeBoardCells {

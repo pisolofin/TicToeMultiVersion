@@ -19,25 +19,22 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 
 	/** Callback when somebody won */
 	const onWonHandler = (player: PlayerToPlay): void => {
-		console.log("onWonHandler" + player);
 		setPlayerWon(player);
 	};
 
 	/** On player changed */
 	const onPlayerChanged = (player: PlayerToPlay): void => {
-		console.log("onPlayerChanged" + player);
 		setPlayerToPlay(player);
 	};
 
 	/** On active game state changed */
 	const onIsGameActiveChanged = (isGameActive: boolean): void => {
-		console.log("onIsGameActiveChanged" + isGameActive);
 		setIsGameActive(isGameActive);
 	};
 
 	/** Handle restart request */
 	const onRestartHandler = (): void => {
-		console.log("Reset");
+
 	}
 
 	return (<>
