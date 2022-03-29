@@ -1,9 +1,12 @@
+import React, { useCallback } from 'react';
 import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
+import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
 
 export class TicToeGameService {
 	private _board: TicToeBoardCells;
 
 	constructor(board: TicToeBoardCells) {
+		console.log("TicToeGameService constructor");
 		this._board = board;
 	}
 
@@ -74,3 +77,10 @@ export class TicToeGameService {
 		return null;
 	}
 }
+
+const gameUtility = new TicToeGameUtility();
+export const TicToeGameServiceContext = React.createContext<TicToeGameService>(
+	new TicToeGameService(
+		gameUtility.resetBoard()
+	)
+);
