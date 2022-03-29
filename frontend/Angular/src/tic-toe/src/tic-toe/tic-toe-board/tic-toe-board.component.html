@@ -1,0 +1,15 @@
+<div class="cells-row">
+	<tic-toe-cell [rowIndex]="0" [columnIndex]="0" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(0, 0)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="0" [columnIndex]="1" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(0, 1)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="0" [columnIndex]="2" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(0, 2)"></tic-toe-cell>
+</div>
+<div class="cells-row">
+	<tic-toe-cell [rowIndex]="1" [columnIndex]="0" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(1, 0)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="1" [columnIndex]="1" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(1, 1)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="1" [columnIndex]="2" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(1, 2)"></tic-toe-cell>
+</div>
+<div class="cells-row">
+	<tic-toe-cell [rowIndex]="2" [columnIndex]="0" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(2, 0)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="2" [columnIndex]="1" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(2, 1)"></tic-toe-cell>
+	<tic-toe-cell [rowIndex]="2" [columnIndex]="2" [cellWidth]="cellWidth" (cellClick)="onClickHandler($event)" [cellState]="ticToeGameService.getCellState(2, 2)"></tic-toe-cell>
+</div>

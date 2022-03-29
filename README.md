@@ -40,6 +40,7 @@ _I'll compile this section when a new language will be used._
 
 * [ ] Local two players version
   * [x] React
+  * [x] Angular
 * [ ] Configuration page for the name of player
 * [ ] Add basic versione of AI ( client version )
 * [ ] Add basic versione of AI ( server version )
