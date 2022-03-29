@@ -1,4 +1,4 @@
-import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../models/ticToe.model';
+import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../../shared/models/ticToe.model';
 
 export class TicToeGameUtility {
 	private static boardWidth	: number = 3

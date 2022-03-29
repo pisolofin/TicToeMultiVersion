@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PlayerToPlay } from 'src/models/ticToe.model';
-import { TicToeGameService } from 'src/services/tic-toe.service';
+import { Component } from '@angular/core';
+import { TicToeGameService } from '../../services/tic-toe.service';
+import { PlayerToPlay } from '../../../../../../shared/models/ticToe.model';
 
 @Component({
 	selector: 'tic-toe-display',

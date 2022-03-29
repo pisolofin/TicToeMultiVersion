@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayerToPlay } from '../../models/ticToe.model';
+import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
 interface TicToeDisplayProps {
 	playerToPlay	: PlayerToPlay;
@@ -26,7 +26,9 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	};
 
 	return (<>
-		<h4>Turn of player {playerToName(props.playerToPlay)}</h4>
+		{props.playerWon == null &&
+			<h4>Turn of player {playerToName(props.playerToPlay)}</h4>
+		}
 		{props.playerWon != null &&
 			<h4>Player {playerToName(props.playerWon)} won</h4>
 		}

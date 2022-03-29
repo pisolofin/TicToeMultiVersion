@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TicToeGameService } from '../../services/tic-toe.service';
-import { TicToeBoardCells, TicToeCellSate } from '../../models/ticToe.model';
 import { TicToeCellOnClick } from '../tic-toe-cell/tic-toe-cell.component';
 import { Subscription } from 'rxjs';
 

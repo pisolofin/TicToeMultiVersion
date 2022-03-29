@@ -1,3 +1,12 @@
+# Angular
+
+## Configuration
+
+### Using shared models and services
+
+Angular support files outside `src` folder, no atction required.
+
+## Utility
 
 ### Install Anglular CLI
 

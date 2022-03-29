@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TicToeCell, { TicToeCellClickHandler } from './TicToeCell';
-import { PlayerToPlay, TicToeCellSate, TicToeBoardCells } from '../../models/ticToe.model';
+import { PlayerToPlay, TicToeCellSate, TicToeBoardCells } from '../../shared/models/ticToe.model';
 import { TicToeGameService } from '../../services/tic-toe.service';
 
 // Component style

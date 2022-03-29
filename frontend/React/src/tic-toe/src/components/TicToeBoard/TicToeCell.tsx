@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { TicToeCellSate } from '../../models/ticToe.model';
+import { TicToeCellSate } from '../../shared/models/ticToe.model';
 
 /** TicToc cell's click handler */
 export type TicToeCellClickHandler = (rowIndex: number, columnIndex: number) => void;
