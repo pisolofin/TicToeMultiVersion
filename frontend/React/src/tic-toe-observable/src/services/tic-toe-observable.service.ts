@@ -10,19 +10,19 @@ export class TicToeGameObservableService {
 
 	private _boardSubject: BehaviorSubject<TicToeBoardCells> = new BehaviorSubject<TicToeBoardCells>([]);
 	/** Observable for the board of the game */
-	public board$: Observable<TicToeBoardCells> = (this._boardSubject as Subject<TicToeBoardCells>).asObservable();
+	public board$: Observable<TicToeBoardCells> = this._boardSubject.asObservable();
 
 	private _playerWonSubject: Subject<PlayerToPlay | null> = new Subject<PlayerToPlay | null>();
 	/** Observable for player has won */
-	public playerWon$: Observable<PlayerToPlay | null> = (this._playerWonSubject).asObservable();
+	public playerWon$: Observable<PlayerToPlay | null> = this._playerWonSubject.asObservable();
 
 	private _playerSubject: BehaviorSubject<PlayerToPlay> = new BehaviorSubject<PlayerToPlay>(PlayerToPlay.PlayerX);
 	/** Observable for current player */
-	public player$: Observable<PlayerToPlay> = (this._playerSubject as Subject<PlayerToPlay>).asObservable();
+	public player$: Observable<PlayerToPlay> = this._playerSubject.asObservable();
 
 	private _isGameActiveSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 	/** Observable for state of the game. When true, players can play, otherwise the game is stoppen */
-	public isGameActive$: Observable<boolean> = (this._isGameActiveSubject as Subject<boolean>).asObservable();
+	public isGameActive$: Observable<boolean> = this._isGameActiveSubject.asObservable();
 
 	constructor(board: TicToeBoardCells, gameUtility: TicToeGameUtility) {
 		console.log("TicToeGameObservableService constructor");
@@ -109,6 +109,10 @@ export class TicToeGameObservableService {
 		}
 
 		this._boardSubject.next(newBoardState);
+	}
+
+	public testFunction(): void {
+		this._isGameActiveSubject.next(!this._isGameActiveSubject.value);
 	}
 }
 

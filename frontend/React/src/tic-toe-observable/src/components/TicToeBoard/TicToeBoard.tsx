@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Subscription } from 'rxjs';
+import { useObservableState } from 'observable-hooks';
+import React, { useContext, useEffect, useRef } from 'react';
+import { filter, map, Subscription } from 'rxjs';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
-import { PlayerToPlay, TicToeBoardCells } from '../../shared/models/ticToe.model';
+import { PlayerToPlay } from '../../shared/models/ticToe.model';
 import TicToeCell, { TicToeCellClickHandler } from './TicToeCell';
 
 // Component style
@@ -20,18 +21,15 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 	/** Size of cells */
 	const cellWidth: number = 30;
 
-	/** Board state */
-	const [, setBoardState] = useState<TicToeBoardCells>();
-	/** Activation of the game, used for game ended or waiting */
-	const [isGameActive, setIsGameActive] = useState<boolean>(true);
-
 	/** Service for the game */
 	const _ticToeGameService: TicToeGameObservableService = useContext(TicToeGameObservableServiceContext);
+	/** Activation of the game, used for game ended or waiting */
+	const isGameActiveRef	: React.MutableRefObject<boolean | undefined> = useRef<boolean | undefined>();
 
 	/** Cell click handler */
 	const cellClickHandler: TicToeCellClickHandler = (rowIndex: number, columnIndex: number): void => {
 		// Check game is active
-		if (!isGameActive) {
+		if (!isGameActiveRef.current) {
 			console.warn("Game not active");
 			return ;
 		}
@@ -49,35 +47,45 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 		);
 	};
 
+	// Subscribe to re-render component on board change
+	useObservableState(_ticToeGameService.board$);
+
 	// Subscriptions
 	useEffect(() => {
 		// When active game state changed
 		const isGameActiveSubscription: Subscription = _ticToeGameService.isGameActive$.subscribe((isGameActive: boolean) => {
-			setIsGameActive(isGameActive);
+			// Update local reference
+			isGameActiveRef.current = isGameActive;
+			// Call callback
 			props.onIsGameActiveChanged?.(isGameActive);
-		});
-		// When active game state changed
-		const boardSubscription: Subscription = _ticToeGameService.board$.subscribe((boardNewState: TicToeBoardCells) => {
-			setBoardState(boardNewState);
 		});
 		// When user changed
 		const playerSubscription: Subscription = _ticToeGameService.player$.subscribe((player: PlayerToPlay) => {
 			props.onPlayerChanged?.(player);
 		});
 		// When someone won
-		const playerWonSubscription: Subscription = _ticToeGameService.playerWon$.subscribe((player: PlayerToPlay | null) => {
-			if (player != null) {
+		const playerWonSubscription: Subscription = _ticToeGameService.playerWon$
+			.pipe(
+				filter((player: PlayerToPlay | null): boolean => {
+					return player != null;
+				}),
+				map((player: PlayerToPlay | null): PlayerToPlay => {
+					return player as PlayerToPlay;
+				})
+			)
+			.subscribe((player: PlayerToPlay) => {
 				props.onWon?.(player);
-			}
-		});
+			})
+		;
 
 		return () => {
 			isGameActiveSubscription.unsubscribe();
-			boardSubscription.unsubscribe();
 			playerSubscription.unsubscribe();
 			playerWonSubscription.unsubscribe();
 		};
-	}, []);
+	}, [props, props.onWon, _ticToeGameService.isGameActive$, _ticToeGameService.board$, _ticToeGameService.player$, _ticToeGameService.playerWon$]);
+
+	console.info("TicToeBoard render");
 
 	return (<>
 		<div className="cells-row">

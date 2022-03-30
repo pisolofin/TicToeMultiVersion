@@ -1,47 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Subscription } from 'rxjs';
+import { useObservableState } from 'observable-hooks';
+import React, { useContext } from 'react';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
 interface TicToeDisplayProps {
-//	isGameActive	: boolean;
-//	playerToPlay	: PlayerToPlay;
-//	playerWon		: PlayerToPlay | null;
 	onRestart?		: () => void;
 }
 
 const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) => {
-	/** Game turn for player */
-	const [playerToPlay, setPlayerToPlay] = useState<PlayerToPlay>(PlayerToPlay.PlayerX);
-	/** Board state */
-	const [playerWon, setPlayerWon] = useState<PlayerToPlay | null>(null);
-	/** Active state of the game */
-	const [isGameActive, setIsGameActive] = useState<boolean>(true);
-
 	/** Service for the game */
 	const _ticToeGameService: TicToeGameObservableService = useContext(TicToeGameObservableServiceContext);
 
-	// Subscriptions
-	useEffect(() => {
-		// When active game state changed
-		const isGameActiveSubscription: Subscription = _ticToeGameService.isGameActive$.subscribe((isGameActive: boolean) => {
-			setIsGameActive(isGameActive);
-		});
-		// When user changed
-		const playerSubscription: Subscription = _ticToeGameService.player$.subscribe((player: PlayerToPlay) => {
-			setPlayerToPlay(player);
-		});
-		// When someone won
-		const playerWonSubscription: Subscription = _ticToeGameService.playerWon$.subscribe((player: PlayerToPlay | null) => {
-			setPlayerWon(player);
-		});
-
-		return () => {
-			isGameActiveSubscription.unsubscribe();
-			playerSubscription.unsubscribe();
-			playerWonSubscription.unsubscribe();
-		};
-	}, []);
+	/** Game turn for player */
+	const playerToPlay	: PlayerToPlay | undefined = useObservableState(_ticToeGameService.player$);
+	/** Board state */
+	const playerWon		: PlayerToPlay | null | undefined = useObservableState(_ticToeGameService.playerWon$);
+	/** Active state of the game */
+	const isGameActive	: boolean | undefined = useObservableState(_ticToeGameService.isGameActive$);
 
 	/** Return the name of the player */
 	const playerToName = (player: PlayerToPlay): string => {
@@ -60,8 +35,10 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		props.onRestart?.();
 	};
 
+	console.info("TicToeDisplay render")
+
 	return (<>
-		{isGameActive && (playerWon == null) &&
+		{isGameActive && (playerWon == null) && playerToPlay &&
 			<h4>Turn of player {playerToName(playerToPlay)}</h4>
 		}
 		{playerWon != null &&
