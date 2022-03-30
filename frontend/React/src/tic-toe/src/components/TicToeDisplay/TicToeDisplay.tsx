@@ -61,7 +61,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	};
 
 	return (<>
-		{isGameActive &&
+		{isGameActive && (playerWon == null) &&
 			<h4>Turn of player {playerToName(playerToPlay)}</h4>
 		}
 		{playerWon != null &&
