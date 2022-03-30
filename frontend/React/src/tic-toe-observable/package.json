@@ -22,7 +22,7 @@
 		"copyfiles": "^2.4.1"
 	},
 	"scripts": {
-		"shared-copy": "copyfiles ../../../shared/*/** src/tic-toe/src/shared/ && copyfiles ../../../shared/*/** src/tic-toe-observable/src/shared/",
+		"shared-copy": "copyfiles ../../../shared/*/** src/tic-toe-observable/src/shared/",
 		"start": "npm run shared-copy && react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
