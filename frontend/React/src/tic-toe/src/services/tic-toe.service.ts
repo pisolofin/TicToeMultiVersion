@@ -28,6 +28,11 @@ export class TicToeGameService {
 		);
 	}
 
+	/** Check in cell is empty and can change state */
+	public canCellChange(rowIndex: number, columnIndex: number): boolean {
+		return this._board[rowIndex][columnIndex] === TicToeCellSate.Empty;
+	}
+
 	/** Return cell state for coordinates */
 	public getCellState(rowIndex: number, columnIndex: number): TicToeCellSate {
 		return this._gameUtility.getCellState(
