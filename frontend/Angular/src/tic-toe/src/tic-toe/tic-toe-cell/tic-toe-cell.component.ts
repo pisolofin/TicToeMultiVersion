@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TicToeCellSate } from '../../models/ticToe.model';
+import { TicToeCellSate } from '../../../../../../shared/models/ticToe.model';
 
 /** Data of onClick event */
 export interface TicToeCellOnClick {
