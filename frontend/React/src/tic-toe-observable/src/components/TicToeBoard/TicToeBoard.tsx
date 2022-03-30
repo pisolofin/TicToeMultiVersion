@@ -1,81 +1,83 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Subscription } from 'rxjs';
+import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
+import { PlayerToPlay, TicToeBoardCells } from '../../shared/models/ticToe.model';
 import TicToeCell, { TicToeCellClickHandler } from './TicToeCell';
-import { PlayerToPlay, TicToeCellSate, TicToeBoardCells } from '../../shared/models/ticToe.model';
-import { TicToeGameService } from '../../services/tic-toe.service';
 
 // Component style
-import './TicToeBoard.scss'
+import './TicToeBoard.scss';
 
 interface TicToeBoardProps {
 	/** Callback when somebody won */
 	onWon?: (player: PlayerToPlay) => void;
 	/** On player changed */
 	onPlayerChanged?: (player: PlayerToPlay) => void;
+	/** On active game state changed */
+	onIsGameActiveChanged?: (isGameActive: boolean) => void;
 }
 
 const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
+	/** Size of cells */
 	const cellWidth: number = 30;
-	/** Game turn for player */
-	const [playerToPlay, setPlayerToPlay] = useState<PlayerToPlay>(PlayerToPlay.PlayerX);
+
 	/** Board state */
-	const [boardState, setBoardState] = useState<TicToeBoardCells>(
-		[
-			[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
-			[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
-			[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty]
-		]
-	);
+	const [, setBoardState] = useState<TicToeBoardCells>();
 	/** Activation of the game, used for game ended or waiting */
 	const [isGameActive, setIsGameActive] = useState<boolean>(true);
+
 	/** Service for the game */
-	const _ticToeGameService: TicToeGameService = new TicToeGameService(boardState);
+	const _ticToeGameService: TicToeGameObservableService = useContext(TicToeGameObservableServiceContext);
 
 	/** Cell click handler */
 	const cellClickHandler: TicToeCellClickHandler = (rowIndex: number, columnIndex: number): void => {
+		// Check game is active
 		if (!isGameActive) {
 			console.warn("Game not active");
 			return ;
 		}
 
+		// Check cell can change
 		if (!_ticToeGameService.canCellChange(rowIndex, columnIndex)) {
 			console.warn("Not empty cell");
 			return ;
 		}
 
-		let nextPlayer		: PlayerToPlay;
-		let newBoardState	: TicToeBoardCells;
-		// Set state ad the board
-		switch (playerToPlay) {
-			case PlayerToPlay.PlayerX:
-				newBoardState = _ticToeGameService.setCellState(rowIndex/* rowIndex */, columnIndex /* columnIndex */, TicToeCellSate.X/* state */);
-				nextPlayer = PlayerToPlay.PlayerO;
-				break;
-			case PlayerToPlay.PlayerO:
-				newBoardState = _ticToeGameService.setCellState(rowIndex/* rowIndex */, columnIndex /* columnIndex */, TicToeCellSate.O/* state */);
-				nextPlayer = PlayerToPlay.PlayerX;
-				break;
-		}
-		// Update board state
-		setBoardState(newBoardState);
-		// Change player turn
-		setPlayerToPlay(nextPlayer);
+		// Set cell played
+		_ticToeGameService.playerPlayed(
+			/* rowIndex */		rowIndex,
+			/* columnIndex */	columnIndex
+		);
 	};
 
-	// When board state change, check if someone won
+	// Subscriptions
 	useEffect(() => {
-		const whoWon: PlayerToPlay | null = _ticToeGameService.whoWon();
-		// If somebody won stop game, fire event
-		if (whoWon != null) {
-			props.onWon?.(whoWon);
+		// When active game state changed
+		const isGameActiveSubscription: Subscription = _ticToeGameService.isGameActive$.subscribe((isGameActive: boolean) => {
+			setIsGameActive(isGameActive);
+			props.onIsGameActiveChanged?.(isGameActive);
+		});
+		// When active game state changed
+		const boardSubscription: Subscription = _ticToeGameService.board$.subscribe((boardNewState: TicToeBoardCells) => {
+			setBoardState(boardNewState);
+		});
+		// When user changed
+		const playerSubscription: Subscription = _ticToeGameService.player$.subscribe((player: PlayerToPlay) => {
+			props.onPlayerChanged?.(player);
+		});
+		// When someone won
+		const playerWonSubscription: Subscription = _ticToeGameService.playerWon$.subscribe((player: PlayerToPlay | null) => {
+			if (player != null) {
+				props.onWon?.(player);
+			}
+		});
 
-			setIsGameActive(false);
-		}
-	}, [boardState]);
-
-	// When user changed
-	useEffect(() => {
-		props.onPlayerChanged?.(playerToPlay);
-	}, [playerToPlay]);
+		return () => {
+			isGameActiveSubscription.unsubscribe();
+			boardSubscription.unsubscribe();
+			playerSubscription.unsubscribe();
+			playerWonSubscription.unsubscribe();
+		};
+	}, []);
 
 	return (<>
 		<div className="cells-row">

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
 import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
 
@@ -52,11 +52,3 @@ export class TicToeGameService {
 		return this._gameUtility.whoWon(this._board);
 	}
 }
-/*
-const gameUtility = new TicToeGameUtility();
-export const TicToeGameServiceContext = React.createContext<TicToeGameService>(
-	new TicToeGameService(
-		gameUtility.resetBoard()
-	)
-);
-*/
