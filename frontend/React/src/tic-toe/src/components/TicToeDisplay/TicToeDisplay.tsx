@@ -25,6 +25,8 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		props.onRestart?.();
 	};
 
+	console.info("TicToeDisplay render");
+
 	return (<>
 		{props.playerWon == null &&
 			<h4>Turn of player {playerToName(props.playerToPlay)}</h4>

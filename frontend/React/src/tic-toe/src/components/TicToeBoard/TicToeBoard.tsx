@@ -77,6 +77,8 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 		props.onPlayerChanged?.(playerToPlay);
 	}, [playerToPlay]);
 
+	console.info("TicToeBoard render");
+
 	return (<>
 		<div className="cells-row">
 			<TicToeCell rowIndex={0} columnIndex={0} width={cellWidth} state={_ticToeGameService.getCellState(0, 0)} onClick={cellClickHandler} />
