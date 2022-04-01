@@ -83,8 +83,8 @@ export class TicToeGameObservableService {
 
 	/** Set player at the cell */
 	public playerPlayed(rowIndex: number, columnIndex: number): void {
-		// If game is stopped, noone can play
-		if (!this._isGameActiveSubject.getValue()) {
+		// Check if cell can change
+		if (!this.canCellChange(rowIndex, columnIndex)) {
 			return ;
 		}
 
@@ -92,27 +92,29 @@ export class TicToeGameObservableService {
 		const currentPlayer		: PlayerToPlay 		= this._playerSubject.getValue();
 
 		// Save current board state
-		const newBoardState		: TicToeBoardCells = [
-			Object.assign([], currentBoardState[0]),
-			Object.assign([], currentBoardState[1]),
-			Object.assign([], currentBoardState[2])
-		];
+		let newBoardState: TicToeBoardCells;
 		switch (currentPlayer) {
 			case PlayerToPlay.PlayerX:
-				newBoardState[rowIndex][columnIndex] = TicToeCellSate.X;
+				newBoardState = this._gameUtility.setCellState(
+					/* board */			currentBoardState,
+					/* rowIndex */		rowIndex,
+					/* columnIndex */	columnIndex,
+					/* state */			TicToeCellSate.X
+				);
 				this._playerSubject.next(PlayerToPlay.PlayerO);
 				break;
 			case PlayerToPlay.PlayerO:
-				newBoardState[rowIndex][columnIndex] = TicToeCellSate.O;
+				newBoardState = this._gameUtility.setCellState(
+					/* board */			currentBoardState,
+					/* rowIndex */		rowIndex,
+					/* columnIndex */	columnIndex,
+					/* state */			TicToeCellSate.O
+				);
 				this._playerSubject.next(PlayerToPlay.PlayerX);
 				break;
 		}
 
 		this._boardSubject.next(newBoardState);
-	}
-
-	public testFunction(): void {
-		this._isGameActiveSubject.next(!this._isGameActiveSubject.value);
 	}
 }
 

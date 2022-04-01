@@ -2,6 +2,8 @@
 
 ## Configuration
 
+Run `npm i` to install al dependencies.
+
 ### Using shared models and services
 
 React ( in default confifuration ) compile only files inside `src` folder for default configuration.

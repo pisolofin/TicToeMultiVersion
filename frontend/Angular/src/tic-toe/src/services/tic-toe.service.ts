@@ -89,18 +89,24 @@ export class TicToeGameService {
 		const currentPlayer		: PlayerToPlay 		= this._playerSubject.getValue();
 
 		// Save current board state
-		const newBoardState		: TicToeBoardCells = [
-			Object.assign([], currentBoardState[0]),
-			Object.assign([], currentBoardState[1]),
-			Object.assign([], currentBoardState[2])
-		];
+		let newBoardState: TicToeBoardCells;
 		switch (currentPlayer) {
 			case PlayerToPlay.PlayerX:
-				newBoardState[rowIndex][columnIndex] = TicToeCellSate.X;
+				newBoardState = this._gameUtility.setCellState(
+					/* board */			currentBoardState,
+					/* rowIndex */		rowIndex,
+					/* columnIndex */	columnIndex,
+					/* state */			TicToeCellSate.X
+				);
 				this._playerSubject.next(PlayerToPlay.PlayerO);
 				break;
 			case PlayerToPlay.PlayerO:
-				newBoardState[rowIndex][columnIndex] = TicToeCellSate.O;
+				newBoardState = this._gameUtility.setCellState(
+					/* board */			currentBoardState,
+					/* rowIndex */		rowIndex,
+					/* columnIndex */	columnIndex,
+					/* state */			TicToeCellSate.O
+				);
 				this._playerSubject.next(PlayerToPlay.PlayerX);
 				break;
 		}
