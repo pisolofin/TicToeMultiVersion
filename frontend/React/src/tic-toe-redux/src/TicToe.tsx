@@ -3,7 +3,7 @@ import TicToeBoard from './components/TicToeBoard/TicToeBoard';
 import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
 import TicToeDisplayStatus from './components/TicToeDisplay/TicToeDisplayStatus';
 import { Provider } from 'react-redux';
-import { store as gameStore } from './redux/game.store';
+import { gameStore } from './redux/game.store';
 
 // Component style
 import './TicToe.scss';

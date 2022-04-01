@@ -16,6 +16,7 @@ Use hook `useObservableState` from [observable-hooks](https://observable-hooks.j
 
 Testing other state manager in React. In `/tic-toe-redux` there is same tic-toe application but with Redux Toolkit state manager.
 [Redux Toolkit](https://redux-toolkit.js.org/).
+In that folder I used Redux without middleware. All lagic is in service.
 
 ## Create new app
 

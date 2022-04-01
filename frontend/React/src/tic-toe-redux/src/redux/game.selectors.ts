@@ -1,6 +1,6 @@
-import { RootState } from './game.store';
+import { GameState } from './game.store';
 
-export const selectPlayerToPlay	= (state: RootState) => state.player;
-export const selectPlayerWon	= (state: RootState) => state.playerWon;
-export const selectIsGameActive	= (state: RootState) => state.isGameActive;
-export const selectBoard		= (state: RootState) => state.board;
+export const selectPlayerToPlay	= (state: GameState) => state.player;
+export const selectPlayerWon	= (state: GameState) => state.playerWon;
+export const selectIsGameActive	= (state: GameState) => state.isGameActive;
+export const selectBoard		= (state: GameState) => state.board;

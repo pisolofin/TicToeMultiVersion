@@ -1,19 +1,28 @@
-import { useSelector } from 'react-redux';
-import { TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
-import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
-import * as GameSelectors from '../redux/game.selectors';
 import React from 'react';
+import * as GameActions from '../redux/game.actions';
+import * as GameSelectors from '../redux/game.selectors';
+import { GameStore, gameStore } from '../redux/game.store';
+import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
+import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
 
 export class TicToeGameReduxService {
 	/** Utility to manage game */
-	private _gameUtility: TicToeGameUtility;
+	private _gameUtility	: TicToeGameUtility;
+	/** Store of state manager */
+	private _store			: GameStore;
 
-	private _isGameActive	: boolean = useSelector(GameSelectors.selectIsGameActive);
+	/** Board of the game */
+	private get _board()		: TicToeBoardCells	{ return GameSelectors.selectBoard(this._store.getState()); }
+	/** Current player */
+	private get _player()		: PlayerToPlay		{ return GameSelectors.selectPlayerToPlay(this._store.getState()); }
+	/** State of the game. When true, players can play, otherwise the game is stopped */
+	private get _isGameActive()	: boolean			{ return GameSelectors.selectIsGameActive(this._store.getState()); }
 
-	constructor(initialBoardState: TicToeBoardCells, gameUtility: TicToeGameUtility) {
+	constructor(gameUtility: TicToeGameUtility, store: GameStore) {
 		console.log("TicToeGameReduxService constructor");
 
-		this._gameUtility = gameUtility;
+		this._gameUtility	= gameUtility;
+		this._store			= store;
 	}
 
 	/** Check in cell is empty and can change state */
@@ -23,69 +32,64 @@ export class TicToeGameReduxService {
 			return false;
 		}
 
-//		return this._gameUtility.canCellChange(
-//			/* board */			this._boardSubject.getValue(),
-//			/* rowIndex */		rowIndex,
-//			/* columnIndex */	columnIndex
-//		);
-
-		return true;
+		return this._gameUtility.canCellChange(
+			/* board */			this._board,
+			/* rowIndex */		rowIndex,
+			/* columnIndex */	columnIndex
+		);
 	}
 
 	/** Return cell state for coordinates */
 	public getCellState(rowIndex: number, columnIndex: number): TicToeCellSate {
-//		return this._gameUtility.getCellState(
-//			/* board */			this._boardSubject.getValue(),
-//			/* rowIndex */		rowIndex,
-//			/* columnIndex */	columnIndex
-//		);
-
-		return TicToeCellSate.Empty;
+		return this._gameUtility.getCellState(
+			/* board */			this._board,
+			/* rowIndex */		rowIndex,
+			/* columnIndex */	columnIndex
+		);
 	}
 
 	/** Set player at the cell */
 	public playerPlayed(rowIndex: number, columnIndex: number): void {
-//		// If game is stopped, noone can play
-//		if (!this._isGameActiveSubject.getValue()) {
-//			return ;
-//		}		
-//
-//		const currentBoardState	: TicToeBoardCells 	= this._boardSubject.getValue();
-//		const currentPlayer		: PlayerToPlay 		= this._playerSubject.getValue();
-//
-//		let newBoardState: TicToeBoardCells;
-//		// Save current board state
-//		switch (currentPlayer) {
-//			case PlayerToPlay.PlayerX:
-//				this._gameUtility.setCellState(
-//					/* board */			this._boardSubject.getValue(),
-//					/* rowIndex */		rowIndex,
-//					/* columnIndex */	columnIndex,
-//					/* state */			TicToeCellSate.X
-//				);
-//				this._playerSubject.next(PlayerToPlay.PlayerO);
-//				break;
-//			case PlayerToPlay.PlayerO:
-//				this._gameUtility.setCellState(
-//					/* board */			this._boardSubject.getValue(),
-//					/* rowIndex */		rowIndex,
-//					/* columnIndex */	columnIndex,
-//					/* state */			TicToeCellSate.O
-//				);
-//				this._playerSubject.next(PlayerToPlay.PlayerX);
-//				break;
-//			default:
-//				return ;
-//		}
-//
-//		this._boardSubject.next(newBoardState);
+		// Check if cell can change
+		if (!this.canCellChange(rowIndex, columnIndex)) {
+			return ;
+		}
+
+		// Save current board state
+		switch (this._player) {
+			case PlayerToPlay.PlayerX:
+				this._store.dispatch(GameActions.setCellState(<GameActions.SetCellStateParams>{
+					rowIndex	: rowIndex,
+					columnIndex	: columnIndex,
+					state		: TicToeCellSate.X
+				}));
+				this._store.dispatch(GameActions.setPlayer(PlayerToPlay.PlayerO));
+				break;
+			case PlayerToPlay.PlayerO:
+				this._store.dispatch(GameActions.setCellState(<GameActions.SetCellStateParams>{
+					rowIndex	: rowIndex,
+					columnIndex	: columnIndex,
+					state		: TicToeCellSate.O
+				}));
+				this._store.dispatch(GameActions.setPlayer(PlayerToPlay.PlayerX));
+				break;
+		}
+
+		// Check who won
+		const whoWon: PlayerToPlay | null = this._gameUtility.whoWon(
+			GameSelectors.selectBoard(this._store.getState())
+		)
+		if (whoWon !== null) {
+			this._store.dispatch(GameActions.setPlayerWon(whoWon));
+			this._store.dispatch(GameActions.setIsGameActive(false));
+		}
 	}
 }
 
-//	const gameUtility = new TicToeGameUtility();
-//	export const TicToeGameReduxServiceContext = React.createContext<TicToeGameReduxService>(
-//		new TicToeGameReduxService(
-//			/* board */			gameUtility.resetBoard(),
-//			/* gameUtility */	gameUtility
-//		)
-//	);
+const gameUtility = new TicToeGameUtility();
+export const TicToeGameReduxServiceContext = React.createContext<TicToeGameReduxService>(
+	new TicToeGameReduxService(
+		/* gameUtility */	gameUtility,
+		/* store */			gameStore
+	)
+);

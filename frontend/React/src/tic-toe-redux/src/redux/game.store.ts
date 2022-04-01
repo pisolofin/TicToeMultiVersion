@@ -1,8 +1,7 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { PlayerToPlay } from '../shared/models/ticToe.model';
+import { AnyAction, combineReducers, configureStore, Dispatch, EnhancedStore } from '@reduxjs/toolkit';
 import { boardReducer, isGameActiveReducer, playerReducer, playerWonReducer } from './game.reducers';
 
-const rootReducer = combineReducers({
+const gameReducer = combineReducers({
 	/** Player has won */
 	playerWon	: playerWonReducer,
 	/** Current player */
@@ -13,8 +12,13 @@ const rootReducer = combineReducers({
 	board		: boardReducer
 });
 
-export const store = configureStore({
-	reducer: rootReducer
-});
+export type GameState		= ReturnType<typeof gameReducer>;
+export type GameStore		= EnhancedStore<GameState, AnyAction, any>;
+export type GameDispatcher	= Dispatch<AnyAction>;
 
-export type RootState = ReturnType<typeof rootReducer>;
+export const gameStore: GameStore = configureStore({
+	reducer		: gameReducer,
+	middleware	: (getDefaultMiddleware) => getDefaultMiddleware().concat(
+		
+	)
+});
