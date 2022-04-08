@@ -12,7 +12,7 @@ interface TicToeProps {
 const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 	/** Game turn for player */
 	const [playerToPlay, setPlayerToPlay] = useState<PlayerToPlay>(PlayerToPlay.PlayerX);
-	/** Board state */
+	/** Player won the game */
 	const [playerWon, setPlayerWon] = useState<PlayerToPlay | null>(null);
 
 	/** Callback when somebody won */

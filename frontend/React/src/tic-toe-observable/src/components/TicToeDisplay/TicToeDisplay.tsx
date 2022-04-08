@@ -13,7 +13,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 
 	/** Game turn for player */
 	const playerToPlay	: PlayerToPlay | undefined = useObservableState(_ticToeGameService.player$);
-	/** Board state */
+	/** Player won the game */
 	const playerWon		: PlayerToPlay | null | undefined = useObservableState(_ticToeGameService.playerWon$);
 	/** Active state of the game */
 	const isGameActive	: boolean | undefined = useObservableState(_ticToeGameService.isGameActive$);
