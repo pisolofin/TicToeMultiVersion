@@ -1,6 +1,7 @@
-import { useObservableState } from 'observable-hooks';
-import React, { useContext } from 'react';
-import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as GameActions from '../../redux/game.actions';
+import * as GameSelectors from '../../redux/game.selectors';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
 interface TicToeDisplayProps {
@@ -8,15 +9,14 @@ interface TicToeDisplayProps {
 }
 
 const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) => {
-	/** Service for the game */
-	const _ticToeGameService: TicToeGameObservableService = useContext(TicToeGameObservableServiceContext);
-
 	/** Game turn for player */
-	const playerToPlay	: PlayerToPlay | undefined = useObservableState(_ticToeGameService.player$);
+	const playerToPlay	: PlayerToPlay = useSelector(GameSelectors.selectPlayerToPlay);
 	/** Player won the game */
-	const playerWon		: PlayerToPlay | null | undefined = useObservableState(_ticToeGameService.playerWon$);
+	const playerWon		: PlayerToPlay | null = useSelector(GameSelectors.selectPlayerWon);
 	/** Active state of the game */
-	const isGameActive	: boolean | undefined = useObservableState(_ticToeGameService.isGameActive$);
+	const isGameActive	: boolean = useSelector(GameSelectors.selectIsGameActive);
+
+	const reduxDispatch = useDispatch();
 
 	/** Return the name of the player */
 	const playerToName = (player: PlayerToPlay): string => {
@@ -33,6 +33,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	/** Handle restart request */
 	const onRestartHandler = (): void => {
 		props.onRestart?.();
+		reduxDispatch(GameActions.resetGame());
 	};
 
 	console.info("TicToeDisplay render")
@@ -44,7 +45,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		{playerWon != null &&
 			<h4>Player {playerToName(playerWon)} won</h4>
 		}
-		{/* <button onClick={onRestartHandler}>Restart</button> */}
+		<button onClick={onRestartHandler}>Restart</button>
 	</>);
 }
 

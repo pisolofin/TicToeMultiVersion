@@ -2,6 +2,9 @@
 
 ## Configuration
 
+Run `npm i` to install al dependencies.
+Run `npm start` to run application.
+
 ### Using shared models and services
 
 Angular support files outside `src` folder, no atction required.
