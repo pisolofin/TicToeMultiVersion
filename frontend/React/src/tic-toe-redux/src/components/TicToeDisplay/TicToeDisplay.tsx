@@ -11,7 +11,7 @@ interface TicToeDisplayProps {
 const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) => {
 	/** Game turn for player */
 	const playerToPlay	: PlayerToPlay = useSelector(GameSelectors.selectPlayerToPlay);
-	/** Board state */
+	/** Player won the game */
 	const playerWon		: PlayerToPlay | null = useSelector(GameSelectors.selectPlayerWon);
 	/** Active state of the game */
 	const isGameActive	: boolean = useSelector(GameSelectors.selectIsGameActive);
