@@ -42,7 +42,7 @@ _I'll compile this section when a new language will be used._
   * [x] React
   * [x] Angular
   * [x] jQuery
-  * [ ] VanillaJS
+  * [x] VanillaJS
 * [ ] Configuration page for the name of player
 * [ ] Add basic versione of AI ( client version )
 * [ ] Add basic versione of AI ( server version )
