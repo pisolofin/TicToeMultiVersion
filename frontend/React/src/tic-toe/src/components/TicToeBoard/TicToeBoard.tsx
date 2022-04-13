@@ -8,14 +8,14 @@ import './TicToeBoard.scss'
 
 interface TicToeBoardProps {
 	/** Callback when somebody won */
-	onWon?: (player: PlayerToPlay) => void;
+	onWon?: (player: PlayerToPlay | null) => void;
 	/** On player changed */
 	onPlayerChanged?: (player: PlayerToPlay) => void;
 	/** On activation of the game changed */
 	onIsGameActiveChanged?: (isGameActive: boolean) => void;
 }
 
-interface TicToeBoardRef {
+export interface TicToeBoardRef {
 	/** Reset the game to initial state */
 	resetGame: () => void;
 }
@@ -104,6 +104,7 @@ const TicToeBoard: React.ForwardRefRenderFunction<TicToeBoardRef, TicToeBoardPro
 				);
 				setPlayerToPlay(PlayerToPlay.PlayerX);
 				setIsGameActive(true);
+				props.onWon?.(null);
 			}
 		} as TicToeBoardRef)
 	);

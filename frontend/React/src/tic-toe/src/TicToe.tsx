@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import TicToeBoard from './components/TicToeBoard/TicToeBoard';
+import React, { MutableRefObject, useState } from 'react';
+import { useRef } from 'react';
+import TicToeBoard, { TicToeBoardRef } from './components/TicToeBoard/TicToeBoard';
 import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
 import TicToeDisplayStatus from './components/TicToeDisplay/TicToeDisplayStatus';
 import { PlayerToPlay } from './shared/models/ticToe.model';
@@ -17,9 +18,11 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 	const [playerWon, setPlayerWon] = useState<PlayerToPlay | null>(null);
 	/** Activation of the game, used for game ended or waiting */
 	const [isGameActive, setIsGameActive] = useState<boolean>(true);
+	/** Reference to board component */
+	const boardRef: MutableRefObject<TicToeBoardRef | null> = useRef<TicToeBoardRef>(null);
 
 	/** Callback when somebody won */
-	const onWonHandler = (player: PlayerToPlay): void => {
+	const onWonHandler = (player: PlayerToPlay | null): void => {
 		console.log("onWonHandler" + player);
 		setPlayerWon(player);
 	};
@@ -33,6 +36,7 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 	/** Handle restart request */
 	const onRestartHandler = (): void => {
 		console.log("Reset");
+		boardRef.current?.resetGame();
 	};
 
 	/** On activation of the game changed */
@@ -44,6 +48,7 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 		<div className="tic-toe-container">
 			<div className="tic-toe-board-container">
 				<TicToeBoard
+					ref={boardRef}
 					onWon={onWonHandler}
 					onPlayerChanged={onPlayerChanged}
 					onIsGameActiveChanged={onIsGameActiveChanged}
