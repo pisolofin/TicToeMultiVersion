@@ -3,11 +3,7 @@ import React, { useContext } from 'react';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
-interface TicToeDisplayProps {
-	onRestart?		: () => void;
-}
-
-const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) => {
+const TicToeDisplay: React.FC = () => {
 	/** Service for the game */
 	const _ticToeGameService: TicToeGameObservableService = useContext(TicToeGameObservableServiceContext);
 
@@ -32,7 +28,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 
 	/** Handle restart request */
 	const onRestartHandler = (): void => {
-		props.onRestart?.();
+		_ticToeGameService.resetBoard();
 	};
 
 	console.info("TicToeDisplay render")
@@ -44,7 +40,7 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 		{playerWon != null &&
 			<h4>Player {playerToName(playerWon)} won</h4>
 		}
-		{/* <button onClick={onRestartHandler}>Restart</button> */}
+		<button onClick={onRestartHandler}>Restart</button>
 	</>);
 }
 

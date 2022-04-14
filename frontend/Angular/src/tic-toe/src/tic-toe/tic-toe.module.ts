@@ -8,6 +8,7 @@ import { TicToeDisplayComponent } from './tic-toe-display/tic-toe-display.compon
 import { TicToeGameService } from '../services/tic-toe.service';
 import { TicToeCellSate } from '../../../../../shared/models/ticToe.model';
 import { TicToeGameUtility } from '../../../../../shared/services/tic-toe-game.utility';
+import { TicToeDisplayStatusComponent } from './tic-toe-display-status/tic-toe-display-status.component';
 
 /** TicToeGameService */
 const ticToeGameServiceFactory = (gameUtility: TicToeGameUtility) => {
@@ -31,7 +32,8 @@ const ticToeGameServiceProvider = {
 		TicToeComponent,
 		TicToeCellComponent,
 		TicToeBoardComponent,
-		TicToeDisplayComponent
+		TicToeDisplayComponent,
+		TicToeDisplayStatusComponent
 	],
 	imports: [
 		BrowserModule

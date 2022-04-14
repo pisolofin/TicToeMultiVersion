@@ -169,7 +169,7 @@ const updateGameLabels = (): void => {
 	// Player won label
 	if (_playerWon) {
 		_playerWonLabel.style.display	= "block";
-		_playerWonLabel.innerText		= `Player ${playerToName(_playerToPlay)} won`;
+		_playerWonLabel.innerText		= `Player ${playerToName(_playerWon)} won`;
 	}else {
 		_playerWonLabel.style.display	= "none";
 	}

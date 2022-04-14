@@ -48,6 +48,8 @@ export class TicToeGameObservableService {
 
 	/** Return a new reset board */
 	public resetBoard(): void {
+		// Current player X
+		this._playerSubject.next(PlayerToPlay.PlayerX);
 		// Noone won
 		this._playerWonSubject.next(null);
 		// Set game active

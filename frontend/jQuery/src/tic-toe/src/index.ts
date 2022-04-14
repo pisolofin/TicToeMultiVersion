@@ -151,7 +151,7 @@ const updateGameLabels = (): void => {
 	// Player won label
 	if (_playerWon) {
 		_$playerWonLabel.show();
-		_$playerWonLabel.text(`Player ${playerToName(_playerToPlay)} won`);
+		_$playerWonLabel.text(`Player ${playerToName(_playerWon)} won`);
 	}else {
 		_$playerWonLabel.hide();
 	}

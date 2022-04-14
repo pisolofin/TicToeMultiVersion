@@ -39,7 +39,7 @@ const TicToeCell: React.FC<TicToeCellProps> = (props: TicToeCellProps) => {
 	};
 
 	return (
-		<button style={cellStyle} onClick={clickHandler} title="ciao">
+		<button type="button" style={cellStyle} onClick={clickHandler} title="ciao">
 			{renderCellState()}
 		</button>
 	);
