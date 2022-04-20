@@ -1,0 +1,3 @@
+Game state: 
+<span *ngIf="ticToeGameService.isGameActive$ | async">active</span>
+<span *ngIf="!(ticToeGameService.isGameActive$ | async)">not active</span>

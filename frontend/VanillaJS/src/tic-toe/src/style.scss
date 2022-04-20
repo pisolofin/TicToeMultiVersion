@@ -21,6 +21,10 @@ $cell-margin: 5px;
 			& + .cells-row {
 				margin-top: $cell-margin;
 			}
+
+			& > * + *{
+				margin-left: $cell-margin;
+			}
 		}
 
 		.tic-toe-button {

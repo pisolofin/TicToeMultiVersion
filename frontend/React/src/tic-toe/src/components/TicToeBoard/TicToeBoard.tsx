@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import TicToeCell, { TicToeCellClickHandler } from './TicToeCell';
 import { PlayerToPlay, TicToeCellSate, TicToeBoardCells } from '../../shared/models/ticToe.model';
 import { TicToeGameService } from '../../services/tic-toe.service';
@@ -8,12 +8,19 @@ import './TicToeBoard.scss'
 
 interface TicToeBoardProps {
 	/** Callback when somebody won */
-	onWon?: (player: PlayerToPlay) => void;
+	onWon?: (player: PlayerToPlay | null) => void;
 	/** On player changed */
 	onPlayerChanged?: (player: PlayerToPlay) => void;
+	/** On activation of the game changed */
+	onIsGameActiveChanged?: (isGameActive: boolean) => void;
 }
 
-const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
+export interface TicToeBoardRef {
+	/** Reset the game to initial state */
+	resetGame: () => void;
+}
+
+const TicToeBoard: React.ForwardRefRenderFunction<TicToeBoardRef, TicToeBoardProps> = (props: TicToeBoardProps, reference: ForwardedRef<TicToeBoardRef>) => {
 	const cellWidth: number = 30;
 	/** Game turn for player */
 	const [playerToPlay, setPlayerToPlay] = useState<PlayerToPlay>(PlayerToPlay.PlayerX);
@@ -77,6 +84,31 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 		props.onPlayerChanged?.(playerToPlay);
 	}, [playerToPlay]);
 
+	// When activation of the game changed
+	useEffect(() => {
+		props.onIsGameActiveChanged?.(isGameActive);
+	}, [isGameActive]);
+
+	// Setup reference of the object
+	useImperativeHandle(
+		reference,
+		(): TicToeBoardRef => ({
+			/** Reset the game to initial state */
+			resetGame: () => {
+				setBoardState(
+					[
+						[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
+						[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty],
+						[TicToeCellSate.Empty, TicToeCellSate.Empty, TicToeCellSate.Empty]
+					]			
+				);
+				setPlayerToPlay(PlayerToPlay.PlayerX);
+				setIsGameActive(true);
+				props.onWon?.(null);
+			}
+		} as TicToeBoardRef)
+	);
+
 	console.info("TicToeBoard render");
 
 	return (<>
@@ -98,4 +130,4 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 	</>);
 };
 
-export default TicToeBoard;
+export default forwardRef(TicToeBoard);
