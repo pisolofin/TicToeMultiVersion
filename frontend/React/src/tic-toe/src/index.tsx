@@ -1,13 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import './index.css';
+import TicToe from './components/TicToe/TicToe';
+import Configuration from './components/Configuration/Configuration';
 
-import TicToe from './TicToe';
+import './index.scss';
+
+const App = () => {
+	const onPlayerNameChangeHandler = (playerXName: string, playerOName: string): void => {
+		console.log("onPlayerNameChangeHandler", playerXName, playerOName);
+
+	};
+
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<TicToe />} />
+				<Route path="configuration" element={
+					<Configuration
+						onPlayerNameChange={onPlayerNameChangeHandler}
+					/>
+				} />
+			</Routes>
+		</BrowserRouter>
+	);
+};
 
 ReactDOM.render(
 	<React.StrictMode>
-		<TicToe />
+		<App />
 	</React.StrictMode>,
 	document.getElementById('root')
 );

@@ -1,11 +1,11 @@
-import React, { MutableRefObject, useState } from 'react';
-import { useRef } from 'react';
-import TicToeBoard, { TicToeBoardRef } from './components/TicToeBoard/TicToeBoard';
-import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
-import TicToeDisplayStatus from './components/TicToeDisplay/TicToeDisplayStatus';
-import { PlayerToPlay } from './shared/models/ticToe.model';
+import React, { MutableRefObject, useState, useRef } from 'react';
+import TicToeBoard, { TicToeBoardRef } from '../TicToeBoard/TicToeBoard';
+import TicToeDisplay from '../TicToeDisplay/TicToeDisplay';
+import TicToeDisplayStatus from '../TicToeDisplay/TicToeDisplayStatus';
+import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
 import './TicToe.scss';
+import { Link } from 'react-router-dom';
 
 interface TicToeProps {
 
@@ -62,10 +62,13 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 				/>
 			</div>
 		</div>
-		<div>
+		<div className="other-container">
 			<TicToeDisplayStatus
 				isGameActive={isGameActive}
 			/>
+		</div>
+		<div className="other-container">
+			<Link to="/configuration">Go to configuration</Link>
 		</div>
 	</>);
 };

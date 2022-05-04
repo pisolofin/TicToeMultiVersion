@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
+import { PlayerToPlay, TicToeCellSate } from '../shared/models/ticToe.model';
 
 export const setPlayerWon		= createAction<PlayerToPlay | null>('game/setPlayerWon');
 export const setPlayer			= createAction<PlayerToPlay>('game/setPlayer');

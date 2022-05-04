@@ -1,5 +1,5 @@
-import { useObservableState } from 'observable-hooks';
 import React, { useContext } from 'react';
+import { useObservableState } from 'observable-hooks';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
 

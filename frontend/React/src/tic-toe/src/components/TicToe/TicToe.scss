@@ -1,3 +1,5 @@
+@import '../style';
+	
 .tic-toe-container {
 	display: flex;
 
@@ -6,15 +8,11 @@
 	}
 
 	.tic-toe-display-container {
-		padding: 5px;
+		padding: 0px 5px 5px 5px;
 
 		& h4 {
 			margin-top: 0;
 			margin-bottom: 0;
 		}
 	}
-
-//	.tic-toe-board-container, .tic-toe-display-container {
-//		display: inline-block;
-//	}
 }

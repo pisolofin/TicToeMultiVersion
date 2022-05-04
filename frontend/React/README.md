@@ -21,6 +21,10 @@ Testing other state manager in React. In `/tic-toe-redux` there is same tic-toe 
 [Redux Toolkit](https://redux-toolkit.js.org/).
 In that folder I used Redux without middleware. All lagic is in service.
 
+### Routing feature
+
+Routing feature is implemented by [React Router](https://reactrouter.com/).
+
 ## Create new app
 
 `npx create-react-app <app-name> --template typescript`

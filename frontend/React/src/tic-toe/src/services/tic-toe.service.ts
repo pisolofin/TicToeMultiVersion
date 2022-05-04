@@ -1,4 +1,3 @@
-import React from 'react';
 import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
 import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
 
