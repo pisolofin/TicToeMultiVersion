@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -8,18 +8,33 @@ import Configuration from './components/Configuration/Configuration';
 import './index.scss';
 
 const App = () => {
+	/** Name of PlayerX */
+	const [playerXName, setPlayerXName] = useState("");
+	/** Name of PlayerO */
+	const [playerOName, setPlayerOName] = useState("");
+
+	/** Handler of players' names */
 	const onPlayerNameChangeHandler = (playerXName: string, playerOName: string): void => {
 		console.log("onPlayerNameChangeHandler", playerXName, playerOName);
-
+		// Save players' configuration
+		setPlayerXName(playerXName);
+		setPlayerOName(playerOName);
 	};
 
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<TicToe />} />
+				<Route path="/" element={
+					<TicToe
+						playerXName={playerXName}
+						playerOName={playerOName}
+					/>
+				} />
 				<Route path="configuration" element={
 					<Configuration
 						onPlayerNameChange={onPlayerNameChangeHandler}
+						playerXName={playerXName}
+						playerOName={playerOName}
 					/>
 				} />
 			</Routes>

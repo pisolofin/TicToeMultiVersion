@@ -8,7 +8,10 @@ import './TicToe.scss';
 import { Link } from 'react-router-dom';
 
 interface TicToeProps {
-
+	/** Name of PlayerX */
+	playerXName: string;
+	/** Name of PlayerO */
+	playerOName: string;
 }
 
 const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
@@ -59,6 +62,8 @@ const TicToe: React.FC<TicToeProps> = (props: TicToeProps) => {
 					playerToPlay={playerToPlay}
 					playerWon={playerWon}
 					onRestart={onRestartHandler}
+					playerXName={props.playerXName}
+					playerOName={props.playerOName}
 				/>
 			</div>
 		</div>
