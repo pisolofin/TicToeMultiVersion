@@ -1,13 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import TicToe from './components/TicToe/TicToe';
+import Configuration from './components/Configuration/Configuration';
 
 import './index.css';
 
-import TicToe from './TicToe';
+
+const App = () => {
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={
+					<TicToe />
+				} />
+				<Route path="configuration" element={
+					<Configuration />
+				} />
+			</Routes>
+		</BrowserRouter>
+	);
+};
 
 ReactDOM.render(
 	<React.StrictMode>
-		<TicToe />
+		<App />
 	</React.StrictMode>,
 	document.getElementById('root')
 );

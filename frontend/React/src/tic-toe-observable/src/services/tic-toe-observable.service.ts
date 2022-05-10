@@ -1,5 +1,5 @@
 import React from 'react';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../shared/models/ticToe.model';
 import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
@@ -12,7 +12,7 @@ export class TicToeGameObservableService {
 	/** Observable for the board of the game */
 	public board$: Observable<TicToeBoardCells> = this._boardSubject.asObservable();
 
-	private _playerWonSubject: Subject<PlayerToPlay | null> = new Subject<PlayerToPlay | null>();
+	private _playerWonSubject: BehaviorSubject<PlayerToPlay | null> = new BehaviorSubject<PlayerToPlay | null>(null);
 	/** Observable for player has won */
 	public playerWon$: Observable<PlayerToPlay | null> = this._playerWonSubject.asObservable();
 
@@ -23,6 +23,14 @@ export class TicToeGameObservableService {
 	private _isGameActiveSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 	/** Observable for state of the game. When true, players can play, otherwise the game is stoppen */
 	public isGameActive$: Observable<boolean> = this._isGameActiveSubject.asObservable();
+
+	private _playerXNameSubject: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+	/** Observable for name of Player X */
+	public playerXName$: Observable<string | undefined> = this._playerXNameSubject.asObservable();
+
+	private _playerONameSubject: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+	/** Observable for name of Player O */
+	public playerOName$: Observable<string | undefined> = this._playerONameSubject.asObservable();
 
 	constructor(board: TicToeBoardCells, gameUtility: TicToeGameUtility) {
 		console.log("TicToeGameObservableService constructor");
@@ -117,6 +125,12 @@ export class TicToeGameObservableService {
 		}
 
 		this._boardSubject.next(newBoardState);
+	}
+
+	/** Set name of players */
+	public setPlayersName(playerXName: string, playerOName: string): void {
+		this._playerXNameSubject.next(playerXName);
+		this._playerONameSubject.next(playerOName);
 	}
 }
 

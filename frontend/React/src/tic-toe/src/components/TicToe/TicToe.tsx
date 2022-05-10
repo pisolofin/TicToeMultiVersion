@@ -3,9 +3,9 @@ import TicToeBoard, { TicToeBoardRef } from '../TicToeBoard/TicToeBoard';
 import TicToeDisplay from '../TicToeDisplay/TicToeDisplay';
 import TicToeDisplayStatus from '../TicToeDisplay/TicToeDisplayStatus';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
+import { Link } from 'react-router-dom';
 
 import './TicToe.scss';
-import { Link } from 'react-router-dom';
 
 interface TicToeProps {
 	/** Name of PlayerX */

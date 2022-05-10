@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
 import { useObservableState } from 'observable-hooks';
+import React, { useContext } from 'react';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
 import { PlayerToPlay } from '../../shared/models/ticToe.model';
 
@@ -13,14 +13,20 @@ const TicToeDisplay: React.FC = () => {
 	const playerWon		: PlayerToPlay | null | undefined = useObservableState(_ticToeGameService.playerWon$);
 	/** Active state of the game */
 	const isGameActive	: boolean | undefined = useObservableState(_ticToeGameService.isGameActive$);
+	/** Name of Player X */
+	const playerXName	: string | undefined = useObservableState(_ticToeGameService.playerXName$);
+	/** Name of Player O */
+	const playerOName	: string | undefined = useObservableState(_ticToeGameService.playerOName$);
+
+	console.log("TicToeDisplay", playerXName, playerOName);
 
 	/** Return the name of the player */
 	const playerToName = (player: PlayerToPlay): string => {
 		switch (player) {
 			case PlayerToPlay.PlayerX:
-				return "X";
+				return playerXName || "X";
 			case PlayerToPlay.PlayerO:
-				return "O";
+				return playerOName || "O";
 			default:
 				return "";
 		}

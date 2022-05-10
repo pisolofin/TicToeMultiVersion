@@ -1,20 +1,14 @@
 import { useObservableState } from 'observable-hooks';
 import React, { useContext, useEffect, useRef } from 'react';
-import { filter, map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TicToeGameObservableService, TicToeGameObservableServiceContext } from '../../services/tic-toe-observable.service';
-import { PlayerToPlay } from '../../shared/models/ticToe.model';
 import TicToeCell, { TicToeCellClickHandler } from './TicToeCell';
 
 // Component style
 import './TicToeBoard.scss';
 
 interface TicToeBoardProps {
-	/** Callback when somebody won */
-	onWon?: (player: PlayerToPlay) => void;
-	/** On player changed */
-	onPlayerChanged?: (player: PlayerToPlay) => void;
-	/** On active game state changed */
-	onIsGameActiveChanged?: (isGameActive: boolean) => void;
+
 }
 
 const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
@@ -56,34 +50,12 @@ const TicToeBoard: React.FC<TicToeBoardProps> = (props: TicToeBoardProps) => {
 		const isGameActiveSubscription: Subscription = _ticToeGameService.isGameActive$.subscribe((isGameActive: boolean) => {
 			// Update local reference
 			isGameActiveRef.current = isGameActive;
-			// Call callback
-			props.onIsGameActiveChanged?.(isGameActive);
 		});
-		// When user changed
-		const playerSubscription: Subscription = _ticToeGameService.player$.subscribe((player: PlayerToPlay) => {
-			props.onPlayerChanged?.(player);
-		});
-		// When someone won
-		const playerWonSubscription: Subscription = _ticToeGameService.playerWon$
-			.pipe(
-				filter((player: PlayerToPlay | null): boolean => {
-					return player != null;
-				}),
-				map((player: PlayerToPlay | null): PlayerToPlay => {
-					return player as PlayerToPlay;
-				})
-			)
-			.subscribe((player: PlayerToPlay) => {
-				props.onWon?.(player);
-			})
-		;
 
 		return () => {
 			isGameActiveSubscription.unsubscribe();
-			playerSubscription.unsubscribe();
-			playerWonSubscription.unsubscribe();
 		};
-	}, [props, props.onWon, _ticToeGameService.isGameActive$, _ticToeGameService.board$, _ticToeGameService.player$, _ticToeGameService.playerWon$]);
+	}, [props, _ticToeGameService.isGameActive$]);
 
 	console.info("TicToeBoard render");
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import TicToeBoard from './components/TicToeBoard/TicToeBoard';
-import TicToeDisplay from './components/TicToeDisplay/TicToeDisplay';
-import TicToeDisplayStatus from './components/TicToeDisplay/TicToeDisplayStatus';
+import { Link } from 'react-router-dom';
+import TicToeBoard from '../TicToeBoard/TicToeBoard';
+import TicToeDisplay from '../TicToeDisplay/TicToeDisplay';
+import TicToeDisplayStatus from '../TicToeDisplay/TicToeDisplayStatus';
 
 // Component style
 import './TicToe.scss';
@@ -16,8 +17,11 @@ const TicToe: React.FC = () => {
 				<TicToeDisplay />
 			</div>
 		</div>
-		<div>
+		<div className="other-container">
 			<TicToeDisplayStatus />
+		</div>
+		<div className="other-container">
+			<Link to="/configuration">Go to configuration</Link>
 		</div>
 	</>);
 };
