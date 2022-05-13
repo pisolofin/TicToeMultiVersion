@@ -7,7 +7,6 @@ import Configuration from './components/Configuration/Configuration';
 
 import './index.css';
 
-
 const App = () => {
 	return (
 		<BrowserRouter>

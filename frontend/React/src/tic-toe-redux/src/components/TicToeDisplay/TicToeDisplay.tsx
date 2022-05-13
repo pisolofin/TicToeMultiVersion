@@ -15,6 +15,10 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	const playerWon		: PlayerToPlay | null = useSelector(GameSelectors.selectPlayerWon);
 	/** Active state of the game */
 	const isGameActive	: boolean = useSelector(GameSelectors.selectIsGameActive);
+	/** Name of Player X */
+	const playerXName	: string | null = useSelector(GameSelectors.selectPlayerXName);
+	/** Name of Player O */
+	const playerOName	: string | null = useSelector(GameSelectors.selectPlayerOName);
 
 	const reduxDispatch = useDispatch();
 
@@ -22,9 +26,9 @@ const TicToeDisplay: React.FC<TicToeDisplayProps> = (props: TicToeDisplayProps) 
 	const playerToName = (player: PlayerToPlay): string => {
 		switch (player) {
 			case PlayerToPlay.PlayerX:
-				return "X";
+				return playerXName || "X";
 			case PlayerToPlay.PlayerO:
-				return "O";
+				return playerOName || "O";
 			default:
 				return "";
 		}

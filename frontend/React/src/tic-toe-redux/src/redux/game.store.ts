@@ -1,5 +1,5 @@
 import { AnyAction, combineReducers, configureStore, Dispatch, EnhancedStore } from '@reduxjs/toolkit';
-import { boardReducer, isGameActiveReducer, playerReducer, playerWonReducer } from './game.reducers';
+import { boardReducer, isGameActiveReducer, playerONameReducer, playerReducer, playerWonReducer, playerXNameReducer } from './game.reducers';
 
 const gameReducer = combineReducers({
 	/** Player has won */
@@ -9,7 +9,11 @@ const gameReducer = combineReducers({
 	/** State of the game. When true, players can play, otherwise the game is stopped */
 	isGameActive: isGameActiveReducer,
 	/** Board of the game */
-	board		: boardReducer
+	board		: boardReducer,
+	/** Name of player X */
+	playerXName	: playerXNameReducer,
+	/** Name of player O */
+	playerOName	: playerONameReducer
 });
 
 export type GameState		= ReturnType<typeof gameReducer>;

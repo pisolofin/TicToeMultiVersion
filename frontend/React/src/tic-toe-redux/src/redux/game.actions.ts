@@ -6,6 +6,8 @@ export const setPlayer			= createAction<PlayerToPlay>('game/setPlayer');
 export const togglePlayer		= createAction('game/togglePlayer');
 export const setIsGameActive	= createAction<boolean>('game/setIsGameActive');
 export const resetGame			= createAction('game/resetGame');
+export const setPlayerXName		= createAction<string>('configuration/setPlayerXName');
+export const setPlayerOName		= createAction<string>('configuration/setPlayerOName');
 
 export interface SetCellStateParams {
 	rowIndex	: number;

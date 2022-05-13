@@ -1,13 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import { gameStore } from './redux/game.store';
+import TicToe from './components/TicToe/TicToe';
+import Configuration from './components/Configuration/Configuration';
 
 import './index.css';
 
-import TicToe from './TicToe';
-
 ReactDOM.render(
 	<React.StrictMode>
-		<TicToe />
+		<Provider store={gameStore}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={
+						<TicToe />
+					} />
+					<Route path="configuration" element={
+						<Configuration />
+					} />
+				</Routes>
+			</BrowserRouter>
+		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

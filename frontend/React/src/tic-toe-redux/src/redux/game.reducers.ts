@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { PlayerToPlay, TicToeBoardCells } from '../shared/models/ticToe.model';
 import { TicToeGameUtility } from '../shared/services/tic-toe-game.utility';
-import { resetGame, setCellState, setIsGameActive, setPlayer, setPlayerWon, togglePlayer } from './game.actions';
+import { resetGame, setCellState, setIsGameActive, setPlayer, setPlayerOName, setPlayerWon, setPlayerXName, togglePlayer } from './game.actions';
 
 // Services
 const gameUtility = new TicToeGameUtility();
@@ -42,4 +42,12 @@ export const boardReducer = createReducer(gameUtility.resetBoard(), builder => b
 		return newBoardState;
 	})
 	.addCase(resetGame, () => gameUtility.resetBoard())
+);
+
+export const playerXNameReducer = createReducer(<string | null>null, builder => builder
+	.addCase(setPlayerXName, (state, action) => action.payload)
+);
+
+export const playerONameReducer = createReducer(<string | null>null, builder => builder
+	.addCase(setPlayerOName, (state, action) => action.payload)
 );
