@@ -2,12 +2,12 @@
 
 ## Configuration
 
-Run `npm i` to install al dependencies.
+Run `npm i` to install all dependencies.
 Run `npm start` to run application.
 
 ### Using shared models and services
 
-React ( in default confifuration ) compile only files inside `src` folder for default configuration.
+React ( in default confifuration ) compile only files inside `src` folder.
 To use files inside `shared` folder outside React project I used `copyfiles` [npm package](https://www.npmjs.com/package/copyfiles) to copy outside `shared` folder inside `src` folder.
 
 ### Testing Observable in React

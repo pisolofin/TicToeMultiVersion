@@ -4,7 +4,7 @@ Code is written in TypeScript.
 
 ## Configuration
 
-Run `npm i` to install al dependencies.
+Run `npm i` to install all dependencies.
 Run `npm start` to run application.
 
 ## How to create new project like this
