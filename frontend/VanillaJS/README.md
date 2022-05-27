@@ -9,12 +9,13 @@ Run `npm start` to run application.
 
 ## How to create new project like this
 
+This section is the same of jQuery version without jQuery reference.
+
 Initialize npm
 `npm init -y`
 
-Add TypeScript, sass and jQuery dependencies
+Add TypeScript and sass dependencies
 `npm install --save-dev typescript sass`
-`npm install --save jquery`
 
 To compile project add webpack and webpack-cli dependencies
 `npm install --save-dev webpack webpack-cli`
@@ -35,3 +36,4 @@ https://webpack.js.org/loaders/sass-loader/
 
 Final configuratio mode
 https://webpack.js.org/configuration/mode/
+

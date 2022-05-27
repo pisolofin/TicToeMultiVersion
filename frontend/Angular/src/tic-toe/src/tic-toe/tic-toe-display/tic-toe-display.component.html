@@ -4,7 +4,4 @@
 <h4 *ngIf="ticToeGameService.playerWon$ | async as whoWon">
 	Player {{ playerToName(whoWon) }} won
 </h4>
-
-<!-- {props.playerWon != null &&
-	<h4>Player {playerToName(props.playerWon)} won</h4>
-} -->
+<button (click)="onRestartHandler()">Restart</button>

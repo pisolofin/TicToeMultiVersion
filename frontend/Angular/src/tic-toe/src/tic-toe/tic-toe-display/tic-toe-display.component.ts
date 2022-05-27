@@ -26,4 +26,9 @@ export class TicToeDisplayComponent {
 				return "";
 		}
 	}
+
+	/** Handle restart request */
+	public onRestartHandler(): void{
+		this.ticToeGameService.resetBoard();
+	};
 }

@@ -1,15 +1,15 @@
-import * as $ from 'jquery';
 import { TicToeGameUtility } from '../../../../shared/services/tic-toe-game.utility';
 import { PlayerToPlay, TicToeBoardCells, TicToeCellSate } from '../../../../shared/models/ticToe.model';
 
 import './style.scss';
 
 // Objects of the view
-let _$buttonList		: JQuery<HTMLButtonElement>;
-let _$playerLabel		: JQuery<HTMLElement>;
-let _$playerWonLabel	: JQuery<HTMLElement>;
-let _$restartButton		: JQuery<HTMLButtonElement>;
-let _$gameStateLabel	: JQuery<HTMLElement>;
+let _buttonList		: HTMLCollectionOf<HTMLButtonElement>;
+let _buttonBoard	: Array<Array<HTMLButtonElement>>;
+let _playerLabel	: HTMLHeadingElement;
+let _playerWonLabel	: HTMLHeadingElement;
+let _restartButton	: HTMLButtonElement;
+let _gameStateLabel	: HTMLDivElement;
 
 // Game's state
 
@@ -26,12 +26,29 @@ let _board: TicToeBoardCells;
 const _ticToeGameUtility: TicToeGameUtility = new TicToeGameUtility();
 
 // Page ready, reference to dom elements
-$(() => {
-	_$buttonList		= $(".tic-toe-button");
-	_$playerLabel		= $(".tic-toe-player");
-	_$playerWonLabel	= $(".tic-toe-player-won");
-	_$restartButton		= $(".tic-toe-restart");
-	_$gameStateLabel	= $(".tic-toe-game-state");
+document.addEventListener("DOMContentLoaded", () => {
+	_buttonList		= <HTMLCollectionOf<HTMLButtonElement>>document.getElementsByClassName("tic-toe-button");
+	_playerLabel	= <HTMLHeadingElement>document.getElementsByClassName("tic-toe-player")[0];
+	_playerWonLabel	= <HTMLHeadingElement>document.getElementsByClassName("tic-toe-player-won")[0];
+	_restartButton	= <HTMLButtonElement>document.getElementsByClassName("tic-toe-restart")[0];
+	_gameStateLabel	= <HTMLDivElement>document.getElementsByClassName("tic-toe-game-state")[0];
+
+	_buttonBoard = [];
+	// Create buttons board with references
+	for (let buttonIndex: number = 0, buttonLength: number = _buttonList.length; buttonIndex < buttonLength; buttonIndex++) {
+		// Read game data
+		const rowIndex		: number = +_buttonList[buttonIndex].getAttribute("data-row");
+		const columnIndex	: number = +_buttonList[buttonIndex].getAttribute("data-column");
+
+		// Create space and reference
+		while (_buttonBoard.length <= rowIndex) {
+			_buttonBoard.push([]);
+		}
+		while (_buttonBoard[rowIndex].length <= columnIndex) {
+			_buttonBoard[rowIndex].push(null);
+		}
+		_buttonBoard[rowIndex][columnIndex] = _buttonList[buttonIndex];
+	}
 
 	// Setup application objects' events
 	setEvents();
@@ -41,17 +58,18 @@ $(() => {
 
 /** Setup events of object */
 const setEvents = (): void => {
-	_$buttonList.on("click", (event: JQuery.ClickEvent<HTMLButtonElement>) => {
-		const $ticToeCell: JQuery<HTMLButtonElement> = $(event.currentTarget);
-		// Read game data
-		const rowIndex		: number = $ticToeCell.data("row");
-		const columnIndex	: number = $ticToeCell.data("column");
-		// Play :)
-		cellClickHandler(/* rowIndex */rowIndex, /* columnIndex */columnIndex);
-	});
+	for (let buttonIndex: number = 0, buttonLength: number = _buttonList.length; buttonIndex < buttonLength; buttonIndex++) {
+		_buttonList[buttonIndex].addEventListener("click", (event: MouseEvent) => {
+			// Read game data
+			const rowIndex		: number = +(<Element>event.target).getAttribute("data-row");
+			const columnIndex	: number = +(<Element>event.target).getAttribute("data-column");
+			// Play :)
+			cellClickHandler(/* rowIndex */rowIndex, /* columnIndex */columnIndex);
+		});
+	}
 
 	// On Reset click, start a new game
-	_$restartButton.on("click", () => {
+	_restartButton.addEventListener("click", () => {
 		restartGame();
 	});
 };
@@ -142,22 +160,22 @@ const playerToName = (player: PlayerToPlay): string => {
 const updateGameLabels = (): void => {
 	// Player label
 	if (_isGameActive && (_playerWon === null) && _playerToPlay) {
-		_$playerLabel.show();
-		_$playerLabel.text(`Turn of player ${playerToName(_playerToPlay)}`);
+		_playerLabel.style.display	= "block";
+		_playerLabel.innerText		= `Turn of player ${playerToName(_playerToPlay)}`;
 	}else {
-		_$playerLabel.hide();
+		_playerLabel.style.display	= "none";
 	}
 
 	// Player won label
 	if (_playerWon) {
-		_$playerWonLabel.show();
-		_$playerWonLabel.text(`Player ${playerToName(_playerWon)} won`);
+		_playerWonLabel.style.display	= "block";
+		_playerWonLabel.innerText		= `Player ${playerToName(_playerWon)} won`;
 	}else {
-		_$playerWonLabel.hide();
+		_playerWonLabel.style.display	= "none";
 	}
 
 	// Game state label
-	_$gameStateLabel.text(`Game state: ${_isGameActive ? "active" : "not active"}`);
+	_gameStateLabel.innerText = `Game state: ${_isGameActive ? "active" : "not active"}`;
 };
 
 /** Convert CellState to text */
@@ -177,9 +195,7 @@ const cellStateToText = (cellState: TicToeCellSate): string => {
 const updateGameCells = (): void => {
 	for (let rowIndex = 0, rowListLength = _board.length; rowIndex < rowListLength; rowIndex++) {
 		for (let columnIndex = 0, columnListLength = _board[rowIndex].length; columnIndex < columnListLength; columnIndex++) {
-			_$buttonList.filter(`[data-row="${rowIndex}"][data-column="${columnIndex}"]`).text(
-				cellStateToText(_board[rowIndex][columnIndex])
-			);
+			_buttonBoard[rowIndex][columnIndex].innerText = cellStateToText(_board[rowIndex][columnIndex])
 		}
 	}
 };
