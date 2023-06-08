@@ -58,19 +58,19 @@ export class TicToeGameReduxService {
 		// Save current board state
 		switch (this._player) {
 			case PlayerToPlay.PlayerX:
-				this._store.dispatch(GameActions.setCellState(<GameActions.SetCellStateParams>{
+				this._store.dispatch(GameActions.setCellState({
 					rowIndex	: rowIndex,
 					columnIndex	: columnIndex,
 					state		: TicToeCellSate.X
-				}));
+				} as GameActions.SetCellStateParams));
 				this._store.dispatch(GameActions.setPlayer(PlayerToPlay.PlayerO));
 				break;
 			case PlayerToPlay.PlayerO:
-				this._store.dispatch(GameActions.setCellState(<GameActions.SetCellStateParams>{
+				this._store.dispatch(GameActions.setCellState({
 					rowIndex	: rowIndex,
 					columnIndex	: columnIndex,
 					state		: TicToeCellSate.O
-				}));
+				} as GameActions.SetCellStateParams));
 				this._store.dispatch(GameActions.setPlayer(PlayerToPlay.PlayerX));
 				break;
 		}
@@ -83,6 +83,10 @@ export class TicToeGameReduxService {
 			this._store.dispatch(GameActions.setPlayerWon(whoWon));
 			this._store.dispatch(GameActions.setIsGameActive(false));
 		}
+	}
+
+	public calculateAsyncAction() {
+		this._store.dispatch(GameActions.calculateAsync(2) as any);
 	}
 }
 

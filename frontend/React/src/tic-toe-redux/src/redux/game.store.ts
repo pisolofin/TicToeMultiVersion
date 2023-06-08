@@ -1,5 +1,5 @@
 import { AnyAction, combineReducers, configureStore, Dispatch, EnhancedStore } from '@reduxjs/toolkit';
-import { boardReducer, isGameActiveReducer, playerONameReducer, playerReducer, playerWonReducer, playerXNameReducer } from './game.reducers';
+import { asyncStatusReducer, boardReducer, isGameActiveReducer, playerONameReducer, playerReducer, playerWonReducer, playerXNameReducer } from './game.reducers';
 
 const gameReducer = combineReducers({
 	/** Player has won */
@@ -13,7 +13,9 @@ const gameReducer = combineReducers({
 	/** Name of player X */
 	playerXName	: playerXNameReducer,
 	/** Name of player O */
-	playerOName	: playerONameReducer
+	playerOName	: playerONameReducer,
+
+	asyncStatus	: asyncStatusReducer
 });
 
 export type GameState		= ReturnType<typeof gameReducer>;
